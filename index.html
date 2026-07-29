@@ -17,7 +17,7 @@
   --gold:#d4af37;
   --gold-light:#f0d78c;
   --gold-dim:#8a6f2a;
-  --cream:#f2e8d2;
+  --cream:#f2e8d2; 
   --cream-dim:#c9bd9f;
   --red:#b3261e;
   --red-bright:#e2453b;
@@ -333,6 +333,92 @@ body{
 .modal-card button{ font-family:'Cinzel',serif; background:linear-gradient(180deg, var(--gold-light), var(--gold)); color:var(--ink); border:none; padding:12px 28px; border-radius:8px; font-weight:700; cursor:pointer; font-size:15px; }
 
 .showdown-hand{ font-size:11px; font-weight:700; color:var(--gold-light); margin-top:2px; }
+/* ---------- 手機端專屬優化 (直向/橫向) ---------- */
+@media (max-width: 768px) {
+  /* 1. 縮小牌桌外圍邊距，讓桌子佔滿手機畫面 */
+  .fullscreen-table-wrap {
+    padding: 60px 8px 170px !important;
+  }
+  
+  .table-rail {
+    border-radius: 40px !important; /* 手機上變為較圓的矩形，空間利用率更高 */
+    padding: 12px !important;
+  }
+  
+  .table-felt {
+    border-radius: 32px !important;
+  }
+
+  /* 2. 縮小公牌與玩家撲克牌尺寸 */
+  .card {
+    width: 48px !important;
+    height: 68px !important;
+    padding: 3px 4px !important;
+  }
+  .card .rk, .card .sut {
+    font-size: 16px !important;
+  }
+  .card.small {
+    width: 38px !important;
+    height: 54px !important;
+  }
+  .card.small .rk, .card.small .sut {
+    font-size: 12px !important;
+  }
+
+  /* 3. 調整玩家座位 Plate 的大小與佈局 */
+  .seat {
+    width: 105px !important;
+  }
+  .plate {
+    padding: 4px 6px !important;
+  }
+  .plate .name {
+    font-size: 11px !important;
+  }
+  .plate .chips {
+    font-size: 12px !important;
+  }
+  .hole-cards {
+    min-height: 56px !important;
+  }
+
+  /* 4. 底部操作面板改為自適應雙層/多行佈局，防止按鈕擠壓 */
+  .action-panel-floating {
+    width: calc(100% - 16px) !important;
+    bottom: 8px !important;
+    padding: 10px 12px !important;
+  }
+
+  .action-row {
+    flex-direction: column !important; /* 手機上按鈕拆分成上下兩層 */
+    gap: 8px !important;
+  }
+
+  .quick-bets, .action-buttons, .raise-group {
+    width: 100% !important;
+    justify-content: space-between !important;
+  }
+
+  .chip-quick {
+    flex: 1 !important;
+    text-align: center !important;
+    padding: 6px 4px !important;
+    font-size: 11px !important;
+  }
+
+  .btn-act {
+    flex: 1 !important;
+    padding: 8px 10px !important;
+    font-size: 13px !important;
+  }
+
+  /* 5. 右側抽屜在手機上滿版顯示 */
+  .side-panel-drawer {
+    width: 100vw !important;
+    right: -100vw !important;
+  }
+}
 </style>
 </head>
 <body>
@@ -360,7 +446,7 @@ body{
           <div class="icon-wrap">♠</div>
           <h3>德州撲克</h3>
           <p>6人桌輪替賽，挑戰 16 位 AI 對手，展現您的精湛牌技與心理戰術。</p>
-          <button class="btn-play">聲明進入</button>
+          <button class="btn-play">立即進入</button>
         </div>
         <div class="game-card disabled">
           <div class="icon-wrap">🎲</div>
