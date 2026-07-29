@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>德州撲克 · 金龍娛樂城</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -17,7 +17,7 @@
   --gold:#d4af37;
   --gold-light:#f0d78c;
   --gold-dim:#8a6f2a;
-  --cream:#f2e8d2; 
+  --cream:#f2e8d2;
   --cream-dim:#c9bd9f;
   --red:#b3261e;
   --red-bright:#e2453b;
@@ -25,8 +25,8 @@
   --shadow-deep: 0 20px 50px rgba(0,0,0,.8);
 }
 *{box-sizing:border-box;}
-html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;}
-body{
+html,body{
+  margin:0;padding:0;width:100%;height:100%;
   background: #0b0704;
   font-family:'Inter',sans-serif;
   color:var(--cream);
@@ -35,15 +35,15 @@ body{
 ::selection{background:var(--gold-dim);color:var(--ink);}
 
 .app{
-  width:100vw;
-  height:100vh;
+  width:100%;
+  min-height:100vh;
   position:relative;
   display:flex;
   flex-direction:column;
 }
 
 /* ---------- View Management ---------- */
-.view-panel{ display:none; width:100%; height:100%; }
+.view-panel{ display:none; width:100%; min-height:100vh; }
 .view-panel.active{ display:flex; flex-direction:column; }
 
 /* ---------- Home View ---------- */
@@ -103,321 +103,236 @@ body{
 
 /* ---------- POKER FULLSCREEN VIEW ---------- */
 #pokerView{
-  position:relative; width:100vw; height:100vh;
+  position:relative; width:100%; min-height:100vh;
   background: radial-gradient(circle at 50% 50%, var(--felt-light) 0%, var(--felt) 50%, var(--felt-dark) 100%);
+  padding-bottom: 180px; /* 留出底部操作區空間 */
 }
 
 .poker-header-overlay{
-  position:absolute; top:12px; left:20px; right:20px;
+  position:sticky; top:0; left:0; right:0;
   display:flex; align-items:center; justify-content:space-between;
-  z-index:20; pointer-events:none;
+  padding: 12px 16px; z-index:20; background: rgba(11,7,4,0.85); backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(212,175,55,0.3);
 }
-.poker-header-overlay > *{ pointer-events:auto; }
 
 .header-left-group{ display:flex; align-items:center; gap:12px; }
 .btn-nav-icon{
   background:rgba(15,9,5,.8); border:1px solid var(--gold-dim); color:var(--gold-light);
-  font-size:14px; padding:6px 14px; border-radius:8px; cursor:pointer; transition:.15s;
-  backdrop-filter:blur(8px); display:flex; align-items:center; gap:6px; font-weight:600;
+  font-size:13px; padding:6px 12px; border-radius:8px; cursor:pointer; transition:.15s;
+  display:flex; align-items:center; gap:6px; font-weight:600;
 }
 .btn-nav-icon:hover{ border-color:var(--gold); background:rgba(212,175,55,.2); }
 
 .table-status-bar{
-  display:flex; align-items:center; gap:16px;
+  display:flex; align-items:center; gap:12px;
   background:rgba(10, 6, 3, 0.75); border:1px solid rgba(212,175,55,0.4);
-  padding:6px 20px; border-radius:999px; backdrop-filter:blur(10px);
-  box-shadow:0 4px 16px rgba(0,0,0,0.6);
+  padding:4px 14px; border-radius:999px;
 }
-.status-item{ display:flex; align-items:center; gap:6px; font-size:13px; color:var(--cream-dim); }
-.status-item span.label{ color:var(--gold-dim); text-transform:uppercase; font-size:11px; letter-spacing:1px; }
-.status-item span.val{ font-family:'Cinzel',serif; font-weight:700; color:var(--gold-light); font-size:15px; }
+.status-item{ display:flex; align-items:center; gap:4px; font-size:12px; color:var(--cream-dim); }
+.status-item span.label{ color:var(--gold-dim); text-transform:uppercase; font-size:10px; letter-spacing:1px; }
+.status-item span.val{ font-family:'Cinzel',serif; font-weight:700; color:var(--gold-light); font-size:13px; }
 .status-divider{ width:1px; height:12px; background:rgba(212,175,55,0.3); }
 
 .side-trigger-btn{
   background:linear-gradient(135deg, rgba(212,175,55,0.2), rgba(0,0,0,0.6));
   border:1px solid var(--gold); color:var(--gold-light); font-family:'Cinzel',serif;
-  padding:8px 16px; border-radius:8px; cursor:pointer; transition:.2s;
-  backdrop-filter:blur(8px); display:flex; align-items:center; gap:8px; font-weight:700; font-size:13px;
-  box-shadow:0 0 10px rgba(212,175,55,0.2);
+  padding:6px 12px; border-radius:8px; cursor:pointer; transition:.2s;
+  display:flex; align-items:center; gap:6px; font-weight:700; font-size:12px;
 }
-.side-trigger-btn:hover{ background:var(--gold); color:var(--ink); box-shadow:0 0 15px rgba(212,175,55,0.5); }
 
 .fullscreen-table-wrap{
-  position:absolute; inset:0;
-  display:flex; justify-content:center; align-items:center;
-  padding: 50px 20px 140px;
+  width:100%; display:flex; justify-content:center; align-items:center;
+  padding: 20px 10px; margin-top: 10px;
 }
 .table-rail{
-  position:relative; width:100%; height:100%; max-width:1300px; max-height:780px;
-  border-radius:220px;
+  position:relative; width:100%; max-width:1100px; height:580px;
+  border-radius:200px;
   background: linear-gradient(180deg, var(--wood-light), var(--wood) 40%, var(--wood-dark));
   box-shadow: var(--shadow-deep), inset 0 0 0 3px rgba(212,175,55,.4);
-  padding:24px;
+  padding:16px;
 }
 .table-felt{
-  position:relative; width:100%; height:100%; border-radius:190px;
+  position:relative; width:100%; height:100%; border-radius:180px;
   background: radial-gradient(ellipse at 50% 50%, var(--felt-light) 0%, var(--felt) 60%, var(--felt-dark) 100%);
   box-shadow: inset 0 0 100px rgba(0,0,0,.85), inset 0 0 0 2px rgba(212,175,55,.3);
 }
 .table-emblem{
-  position:absolute; top:36%; left:50%; transform:translate(-50%,-50%);
-  font-family:'Cinzel',serif; font-size:20px; letter-spacing:12px;
+  position:absolute; top:32%; left:50%; transform:translate(-50%,-50%);
+  font-family:'Cinzel',serif; font-size:16px; letter-spacing:8px;
   color:rgba(212,175,55,.08); text-transform:uppercase; pointer-events:none; white-space:nowrap;
 }
 
 .center-area{
-  position:absolute; top:45%; left:50%; transform:translate(-50%,-50%);
-  display:flex; flex-direction:column; align-items:center; gap:16px; z-index:5;
+  position:absolute; top:46%; left:50%; transform:translate(-50%,-50%);
+  display:flex; flex-direction:column; align-items:center; gap:10px; z-index:5; width:100%;
 }
 .pot-badge-center{
-  display:flex; align-items:center; gap:8px;
-  background:rgba(0,0,0,.7); border:1px solid var(--gold);
-  padding:6px 20px; border-radius:999px; font-size:16px; font-weight:700; color:var(--gold-light);
-  box-shadow:0 4px 20px rgba(0,0,0,.8); backdrop-filter:blur(4px);
+  display:flex; align-items:center; gap:6px;
+  background:rgba(0,0,0,.75); border:1px solid var(--gold);
+  padding:4px 16px; border-radius:999px; font-size:14px; font-weight:700; color:var(--gold-light);
+  box-shadow:0 4px 16px rgba(0,0,0,.8);
 }
-.pot-badge-center .chip-ico{ width:18px; height:18px; border-radius:50%; background:radial-gradient(circle at 35% 30%, var(--gold-light), var(--gold) 55%, var(--gold-dim)); }
+.pot-badge-center .chip-ico{ width:14px; height:14px; border-radius:50%; background:radial-gradient(circle at 35% 30%, var(--gold-light), var(--gold) 55%, var(--gold-dim)); }
 
-.community{ display:flex; gap:12px; align-items:center; }
+.community{ display:flex; gap:6px; align-items:center; justify-content:center; }
 
 .card{
-  width:72px; height:102px; border-radius:8px;
+  width:58px; height:82px; border-radius:6px;
   background:linear-gradient(180deg,#fbf6e9,#f2e8d2);
-  box-shadow:0 8px 20px rgba(0,0,0,.7), inset 0 0 0 1px rgba(0,0,0,.15);
-  display:flex; flex-direction:column; justify-content:space-between; padding:6px 8px;
+  box-shadow:0 4px 12px rgba(0,0,0,.7), inset 0 0 0 1px rgba(0,0,0,.15);
+  display:flex; flex-direction:column; justify-content:space-between; padding:4px 6px;
   font-family:'Cinzel',serif; font-weight:700; position:relative;
   animation:dealIn .3s cubic-bezier(.2,.9,.3,1.2) both; flex-shrink:0;
 }
-.card.small{ width:54px; height:76px; border-radius:6px; padding:4px 6px; }
-.card .rk{ font-size:24px; line-height:1; }
-.card.small .rk{ font-size:17px; }
-.card .sut{ font-size:24px; line-height:1; align-self:flex-end; }
-.card.small .sut{ font-size:17px; }
+.card.small{ width:42px; height:60px; border-radius:4px; padding:2px 4px; }
+.card .rk{ font-size:18px; line-height:1; }
+.card.small .rk{ font-size:14px; }
+.card .sut{ font-size:18px; line-height:1; align-self:flex-end; }
+.card.small .sut{ font-size:14px; }
 .card.red{ color:var(--red); }
 .card.black{ color:#1a1410; }
 .card.back{
   background: repeating-linear-gradient(45deg, #7a1f22 0 8px, #5c1417 8px 16px);
-  box-shadow:0 6px 16px rgba(0,0,0,.6), inset 0 0 0 2px rgba(212,175,55,.6);
+  box-shadow:0 4px 10px rgba(0,0,0,.6), inset 0 0 0 1px rgba(212,175,55,.6);
 }
-.card.back::after{ content:'♠'; position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:rgba(212,175,55,.7); font-size:22px; }
+.card.back::after{ content:'♠'; position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:rgba(212,175,55,.7); font-size:16px; }
 .card.placeholder{ background:rgba(255,255,255,.02); box-shadow:inset 0 0 0 1px rgba(212,175,55,.15); animation:none; }
-@keyframes dealIn{ from{ opacity:0; transform:translateY(-12px) scale(.8); } to{ opacity:1; transform:translateY(0) scale(1); } }
+@keyframes dealIn{ from{ opacity:0; transform:translateY(-10px) scale(.8); } to{ opacity:1; transform:translateY(0) scale(1); } }
 
 .seat{
-  position:absolute; width:150px; transform:translate(-50%,-50%);
-  display:flex; flex-direction:column; align-items:center; gap:4px; z-index:4;
+  position:absolute; width:130px; transform:translate(-50%,-50%);
+  display:flex; flex-direction:column; align-items:center; gap:2px; z-index:4;
 }
 .plate{
   background:linear-gradient(180deg, rgba(20,12,6,.92), rgba(10,6,3,.95));
-  border:1px solid var(--gold-dim); border-radius:12px; padding:8px 10px; width:100%;
-  text-align:center; box-shadow:0 8px 20px rgba(0,0,0,.7); position:relative; backdrop-filter:blur(4px);
+  border:1px solid var(--gold-dim); border-radius:10px; padding:6px 8px; width:100%;
+  text-align:center; box-shadow:0 6px 16px rgba(0,0,0,.7); position:relative; backdrop-filter:blur(4px);
 }
-.seat.active .plate{ border-color:var(--gold); box-shadow:0 0 0 2px rgba(212,175,55,.5), 0 8px 20px rgba(212,175,55,.25); }
+.seat.active .plate{ border-color:var(--gold); box-shadow:0 0 0 2px rgba(212,175,55,.5), 0 4px 16px rgba(212,175,55,.25); }
 .seat.folded .plate{ opacity:.45; filter:grayscale(.5); }
 .seat.out .plate{ opacity:.25; filter:grayscale(1); }
-.plate .name{ font-size:13px; font-weight:700; color:var(--cream); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; display:flex; align-items:center; justify-content:center; gap:4px; }
-.plate .chips{ font-size:14px; color:var(--gold-light); margin-top:2px; font-weight:700; font-variant-numeric:tabular-nums; }
+.plate .name{ font-size:11px; font-weight:700; color:var(--cream); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; display:flex; align-items:center; justify-content:center; gap:3px; }
+.plate .chips{ font-size:12px; color:var(--gold-light); margin-top:1px; font-weight:700; }
 .dealer-chip{
-  position:absolute; top:-8px; right:-8px; width:22px; height:22px; border-radius:50%;
+  position:absolute; top:-6px; right:-6px; width:18px; height:18px; border-radius:50%;
   background:radial-gradient(circle at 35% 30%, #fff, var(--gold-light) 55%, var(--gold));
-  color:var(--ink); font-family:'Cinzel',serif; font-weight:800; font-size:12px;
-  display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(0,0,0,.6);
+  color:var(--ink); font-family:'Cinzel',serif; font-weight:800; font-size:10px;
+  display:flex; align-items:center; justify-content:center; box-shadow:0 2px 6px rgba(0,0,0,.6);
 }
-.badge-blind{ font-size:10px; color:var(--felt-dark); background:var(--gold-light); border-radius:3px; padding:1px 4px; font-weight:800; }
-.hole-cards{ display:flex; gap:5px; justify-content:center; min-height:76px; position:relative; }
+.badge-blind{ font-size:9px; color:var(--felt-dark); background:var(--gold-light); border-radius:3px; padding:0 3px; font-weight:800; }
+.hole-cards{ display:flex; gap:3px; justify-content:center; min-height:60px; position:relative; }
 
 .rank-badge-card {
-  position: absolute; top: -10px; right: -14px;
+  position: absolute; top: -8px; right: -10px;
   background: linear-gradient(135deg, var(--gold-light), var(--gold));
-  color: var(--ink); font-family: 'Cinzel', serif; font-weight: 800; font-size: 12px;
-  padding: 2px 6px; border-radius: 10px; box-shadow: 0 3px 8px rgba(0,0,0,0.8);
-  border: 1px solid #fff; z-index: 10; line-height: 1.2; white-space: nowrap;
+  color: var(--ink); font-family: 'Cinzel', serif; font-weight: 800; font-size: 10px;
+  padding: 1px 5px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.8);
+  border: 1px solid #fff; z-index: 10; white-space: nowrap;
 }
 
 .bet-chip{
   display:flex; align-items:center; gap:4px; background:rgba(0,0,0,.75);
-  border:1px solid var(--gold-dim); border-radius:999px; padding:3px 12px;
-  font-size:12px; font-weight:700; color:var(--gold-light); min-height:22px;
+  border:1px solid var(--gold-dim); border-radius:999px; padding:2px 8px;
+  font-size:11px; font-weight:700; color:var(--gold-light); min-height:18px;
 }
-.bet-chip .dot{ width:7px; height:7px; border-radius:50%; background:var(--gold-light); }
-.status-tag{ font-size:12px; font-weight:600; color:var(--cream-dim); min-height:16px; text-shadow:0 2px 4px rgba(0,0,0,0.8); }
+.bet-chip .dot{ width:5px; height:5px; border-radius:50%; background:var(--gold-light); }
+.status-tag{ font-size:11px; font-weight:600; color:var(--cream-dim); min-height:14px; text-shadow:0 2px 4px rgba(0,0,0,0.8); }
 .status-tag.fold{ color:#e27c73; }
 .status-tag.allin{ color:var(--red-bright); font-weight:700; }
 
-/* ---------- 下方半透明懸浮式操作面板 (重新排版) ---------- */
+/* ---------- 懸浮式操作面板 (手機響應優化) ---------- */
 .action-panel-floating{
-  position:absolute; bottom:16px; left:50%; transform:translateX(-50%);
-  width:calc(100% - 48px); max-width:960px;
-  background:linear-gradient(180deg, rgba(20,12,6,.92), rgba(10,6,3,.96));
-  border:1px solid var(--gold); border-radius:16px; padding:12px 24px;
-  box-shadow:0 10px 40px rgba(0,0,0,.8); backdrop-filter:blur(12px);
-  display:flex; flex-direction:column; gap:10px; z-index:30;
+  position:fixed; bottom:0; left:0; right:0;
+  background:linear-gradient(180deg, rgba(20,12,6,.96), rgba(10,6,3,.98));
+  border-top:1px solid var(--gold); padding:10px 16px 14px;
+  box-shadow:0 -5px 25px rgba(0,0,0,.9); backdrop-filter:blur(12px);
+  display:flex; flex-direction:column; gap:8px; z-index:30;
 }
 
 .hand-strength{ 
-  font-size:14px; color:var(--gold-light); letter-spacing:1px; 
-  text-align:left; min-height:18px; font-weight:700;
+  font-size:13px; color:var(--gold-light); text-align:center; font-weight:700;
   padding-bottom: 4px; border-bottom: 1px solid rgba(212,175,55,0.15);
 }
 
-.action-row{ display:flex; align-items:center; gap:20px; justify-content:space-between; flex-wrap:nowrap; }
+.action-row{ display:flex; flex-direction:column; gap:8px; }
 
-.quick-bets{ display:flex; gap:8px; flex-shrink:0; }
+.quick-bets{ display:flex; gap:6px; width:100%; }
 .chip-quick{ 
-  background:rgba(212,175,55,.1); border:1px solid var(--gold-dim); color:var(--cream-dim); 
-  font-size:12px; font-weight:600; padding:8px 14px; border-radius:6px; cursor:pointer; transition:.15s; 
-  white-space:nowrap;
+  flex:1; background:rgba(212,175,55,.12); border:1px solid var(--gold-dim); color:var(--cream-dim); 
+  font-size:12px; font-weight:600; padding:6px; border-radius:6px; cursor:pointer; text-align:center;
 }
-.chip-quick:hover{ background:rgba(212,175,55,.25); color:var(--gold-light); }
+.chip-quick:active{ background:rgba(212,175,55,.3); color:var(--gold-light); }
 
-.action-buttons{ display:flex; gap:10px; align-items:center; flex-shrink:0; }
-.btn-act{ font-family:'Inter',sans-serif; font-weight:700; font-size:14px; padding:10px 20px; border-radius:8px; border:1px solid transparent; cursor:pointer; transition:.15s; white-space:nowrap; }
+.bottom-controls{ display:flex; gap:8px; width:100%; align-items:center; }
+.action-buttons{ display:flex; gap:6px; flex:1; }
+.btn-act{ flex:1; font-family:'Inter',sans-serif; font-weight:700; font-size:13px; padding:10px 4px; border-radius:8px; border:1px solid transparent; cursor:pointer; text-align:center; }
 .btn-act:disabled{ opacity:.3; cursor:not-allowed; }
-.btn-fold{ background:rgba(179,38,30,.2); color:#e79b96; border-color:#7a2d28; }
-.btn-fold:hover:not(:disabled){ background:rgba(179,38,30,.4); }
-.btn-call{ background:rgba(47,111,143,.25); color:#a9d3e8; border-color:#2f6f8f; }
-.btn-call:hover:not(:disabled){ background:rgba(47,111,143,.45); }
+.btn-fold{ background:rgba(179,38,30,.25); color:#e79b96; border-color:#7a2d28; }
+.btn-call{ background:rgba(47,111,143,.3); color:#a9d3e8; border-color:#2f6f8f; }
 
-.raise-group{ display:flex; align-items:center; gap:10px; flex:1; min-width:240px; }
-.btn-raise{ background:linear-gradient(180deg, var(--gold-light), var(--gold)); color:var(--ink); border-color:var(--gold-dim); font-weight:800; flex-shrink:0; }
-.btn-raise:hover:not(:disabled){ filter:brightness(1.1); }
+.raise-group{ display:flex; align-items:center; gap:6px; flex:1.2; }
+.btn-raise{ background:linear-gradient(180deg, var(--gold-light), var(--gold)); color:var(--ink); border-color:var(--gold-dim); font-weight:800; width:70px; flex-shrink:0; }
 
-.slider-wrap{ flex:1; display:flex; align-items:center; gap:10px; background:rgba(0,0,0,0.3); padding:4px 12px; border-radius:8px; border:1px solid rgba(212,175,55,0.2); }
-.slider-wrap input[type=range]{ flex:1; -webkit-appearance:none; height:6px; border-radius:4px; background:linear-gradient(90deg, var(--gold-dim), var(--felt-light)); outline:none; }
-.slider-wrap input[type=range]::-webkit-slider-thumb{ -webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:var(--gold-light); box-shadow:0 0 0 2px var(--gold-dim); cursor:pointer; }
-.slider-amt{ font-family:'Cinzel',serif; font-weight:700; color:var(--gold-light); font-size:15px; min-width:45px; text-align:right; }
+.slider-wrap{ flex:1; display:flex; align-items:center; gap:6px; background:rgba(0,0,0,0.4); padding:2px 8px; border-radius:6px; border:1px solid rgba(212,175,55,0.2); }
+.slider-wrap input[type=range]{ flex:1; -webkit-appearance:none; height:4px; border-radius:2px; background:var(--gold-dim); outline:none; }
+.slider-wrap input[type=range]::-webkit-slider-thumb{ -webkit-appearance:none; width:16px; height:16px; border-radius:50%; background:var(--gold-light); cursor:pointer; }
+.slider-amt{ font-family:'Cinzel',serif; font-weight:700; color:var(--gold-light); font-size:12px; min-width:35px; text-align:right; }
 
-.next-hand-cta{ display:flex; justify-content:center; }
-.btn-next{ font-family:'Cinzel',serif; background:linear-gradient(180deg, var(--gold-light), var(--gold)); color:var(--ink); border:none; padding:12px 28px; border-radius:8px; font-size:15px; font-weight:800; cursor:pointer; box-shadow:0 4px 14px rgba(212,175,55,.3); }
+.next-hand-cta{ display:flex; justify-content:center; width:100%; }
+.btn-next{ width:100%; font-family:'Cinzel',serif; background:linear-gradient(180deg, var(--gold-light), var(--gold)); color:var(--ink); border:none; padding:12px; border-radius:8px; font-size:15px; font-weight:800; cursor:pointer; }
 
-/* ---------- 右側滑出面板 Drawer ---------- */
+/* ---------- Drawer ---------- */
 .drawer-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(3px); z-index: 90; display: none; }
 .drawer-overlay.active { display: block; }
 
 .side-panel-drawer {
-  position: fixed; top: 0; right: -400px; width: 380px; height: 100vh;
+  position: fixed; top: 0; right: -100vw; width: 85vw; max-width:360px; height: 100vh;
   background: linear-gradient(180deg, rgba(20,12,6,.98), rgba(10,6,3,.98));
   border-left: 1px solid var(--gold); box-shadow: -10px 0 40px rgba(0,0,0,.9);
-  padding: 20px 18px; display: flex; flex-direction: column; gap: 14px; z-index: 95;
-  transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1); overflow:hidden;
+  padding: 16px; display: flex; flex-direction: column; gap: 12px; z-index: 95;
+  transition: right 0.3s ease; overflow:hidden;
 }
 .side-panel-drawer.open { right: 0; }
-.drawer-header { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(212,175,55,0.2); padding-bottom: 12px; flex-shrink:0; }
-.drawer-title { font-family: 'Cinzel', serif; font-size: 18px; font-weight: 700; color: var(--gold-light); }
-.drawer-close-btn { background: transparent; border: 1px solid var(--gold-dim); color: var(--gold-light); border-radius: 6px; padding: 4px 10px; cursor: pointer; font-size: 13px; font-weight: 600; }
-.drawer-close-btn:hover { background: rgba(212,175,55,.2); }
+.drawer-header { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(212,175,55,0.2); padding-bottom: 10px; flex-shrink:0; }
+.drawer-title { font-family: 'Cinzel', serif; font-size: 16px; font-weight: 700; color: var(--gold-light); }
+.drawer-close-btn { background: transparent; border: 1px solid var(--gold-dim); color: var(--gold-light); border-radius: 6px; padding: 4px 8px; cursor: pointer; font-size: 12px; }
 
-.panel-box{ background:linear-gradient(180deg, rgba(30,19,11,.85), rgba(15,9,5,.85)); border:1px solid var(--gold-dim); border-radius:12px; padding:12px; display:flex; flex-direction:column; gap:8px; flex-shrink:0; }
+.panel-box{ background:rgba(30,19,11,.85); border:1px solid var(--gold-dim); border-radius:10px; padding:10px; display:flex; flex-direction:column; gap:6px; flex-shrink:0; }
 .panel-box.log-box{ flex:1; min-height:0; display:flex; flex-direction:column; }
-.panel-title{ font-family:'Cinzel',serif; font-size:13px; font-weight:700; letter-spacing:1px; color:var(--gold-light); text-transform:uppercase; display:flex; align-items:center; gap:6px; flex-shrink:0; }
+.panel-title{ font-family:'Cinzel',serif; font-size:12px; font-weight:700; color:var(--gold-light); display:flex; align-items:center; gap:6px; flex-shrink:0; }
 
-.log-list{ display:flex; flex-direction:column-reverse; gap:8px; flex:1; overflow-y:auto; padding-right:6px; margin-top:6px; }
-.log-list::-webkit-scrollbar { width: 4px; }
-.log-list::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 4px; }
-.log-item{ font-size:12px; color:var(--cream-dim); line-height:1.4; border-left:2px solid rgba(212,175,55,.25); padding-left:8px; word-break:break-word; }
+.log-list{ display:flex; flex-direction:column-reverse; gap:6px; flex:1; overflow-y:auto; padding-right:4px; margin-top:4px; }
+.log-item{ font-size:11px; color:var(--cream-dim); line-height:1.3; border-left:2px solid rgba(212,175,55,.25); padding-left:6px; word-break:break-word; }
 .log-item.important{ color:var(--gold-light); border-left-color:var(--gold); font-weight:600; }
 
-.blind-info{ font-size:13px; color:var(--cream-dim); display:flex; flex-direction:column; gap:6px; }
+.blind-info{ font-size:12px; color:var(--cream-dim); display:flex; flex-direction:column; gap:4px; }
 .blind-info .row{ display:flex; justify-content:space-between; }
 .blind-info b{ color:var(--gold-light); }
 
-.stat-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-.stat-card{ background:rgba(0,0,0,0.4); border:1px solid rgba(212,175,55,0.2); border-radius:8px; padding:8px 10px; text-align:center; }
-.stat-card .lbl{ font-size:11px; color:var(--cream-dim); }
-.stat-card .val{ font-size:15px; font-weight:700; color:var(--gold-light); margin-top:2px; font-family:'Cinzel',serif; }
+.stat-grid{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.stat-card{ background:rgba(0,0,0,0.4); border:1px solid rgba(212,175,55,0.2); border-radius:6px; padding:6px; text-align:center; }
+.stat-card .lbl{ font-size:10px; color:var(--cream-dim); }
+.stat-card .val{ font-size:13px; font-weight:700; color:var(--gold-light); margin-top:2px; font-family:'Cinzel',serif; }
 
 /* Modal */
-.modal-overlay{ position:fixed; inset:0; background:rgba(6,4,2,.8); display:flex; align-items:center; justify-content:center; z-index:100; backdrop-filter:blur(4px); }
-.modal-card{ background:linear-gradient(180deg, #241609, #140d06); border:1px solid var(--gold); border-radius:14px; padding:32px 36px; max-width:400px; text-align:center; }
-.modal-card h2{ font-family:'Cinzel',serif; color:var(--gold-light); margin:0 0 12px; font-size:24px; }
-.modal-card p{ color:var(--cream-dim); font-size:15px; line-height:1.6; margin:0 0 20px; }
-.modal-card button{ font-family:'Cinzel',serif; background:linear-gradient(180deg, var(--gold-light), var(--gold)); color:var(--ink); border:none; padding:12px 28px; border-radius:8px; font-weight:700; cursor:pointer; font-size:15px; }
+.modal-overlay{ position:fixed; inset:0; background:rgba(6,4,2,.85); display:flex; align-items:center; justify-content:center; z-index:100; backdrop-filter:blur(4px); padding:20px; }
+.modal-card{ background:linear-gradient(180deg, #241609, #140d06); border:1px solid var(--gold); border-radius:14px; padding:24px; width:100%; max-width:340px; text-align:center; }
+.modal-card h2{ font-family:'Cinzel',serif; color:var(--gold-light); margin:0 0 10px; font-size:20px; }
+.modal-card p{ color:var(--cream-dim); font-size:14px; line-height:1.5; margin:0 0 16px; }
+.modal-card button{ font-family:'Cinzel',serif; background:linear-gradient(180deg, var(--gold-light), var(--gold)); color:var(--ink); border:none; padding:10px 24px; border-radius:8px; font-weight:700; cursor:pointer; font-size:14px; }
 
-.showdown-hand{ font-size:11px; font-weight:700; color:var(--gold-light); margin-top:2px; }
-/* ---------- 手機端專屬優化 (直向/橫向) ---------- */
-@media (max-width: 768px) {
-  /* 1. 縮小牌桌外圍邊距，讓桌子佔滿手機畫面 */
-  .fullscreen-table-wrap {
-    padding: 60px 8px 170px !important;
-  }
-  
+.showdown-hand{ font-size:10px; font-weight:700; color:var(--gold-light); margin-top:1px; }
+
+/* 📱 手機直螢幕（Portrait）專屬優化 */
+@media (max-width: 600px) and (orientation: portrait) {
   .table-rail {
-    border-radius: 40px !important; /* 手機上變為較圓的矩形，空間利用率更高 */
-    padding: 12px !important;
+    height: 480px !important;
+    border-radius: 80px !important; /* 直螢幕下調整為長橢圓，防止擠壓 */
   }
-  
-  .table-felt {
-    border-radius: 32px !important;
-  }
-
-  /* 2. 縮小公牌與玩家撲克牌尺寸 */
-  .card {
-    width: 48px !important;
-    height: 68px !important;
-    padding: 3px 4px !important;
-  }
-  .card .rk, .card .sut {
-    font-size: 16px !important;
-  }
-  .card.small {
-    width: 38px !important;
-    height: 54px !important;
-  }
-  .card.small .rk, .card.small .sut {
-    font-size: 12px !important;
-  }
-
-  /* 3. 調整玩家座位 Plate 的大小與佈局 */
-  .seat {
-    width: 105px !important;
-  }
-  .plate {
-    padding: 4px 6px !important;
-  }
-  .plate .name {
-    font-size: 11px !important;
-  }
-  .plate .chips {
-    font-size: 12px !important;
-  }
-  .hole-cards {
-    min-height: 56px !important;
-  }
-
-  /* 4. 底部操作面板改為自適應雙層/多行佈局，防止按鈕擠壓 */
-  .action-panel-floating {
-    width: calc(100% - 16px) !important;
-    bottom: 8px !important;
-    padding: 10px 12px !important;
-  }
-
-  .action-row {
-    flex-direction: column !important; /* 手機上按鈕拆分成上下兩層 */
-    gap: 8px !important;
-  }
-
-  .quick-bets, .action-buttons, .raise-group {
-    width: 100% !important;
-    justify-content: space-between !important;
-  }
-
-  .chip-quick {
-    flex: 1 !important;
-    text-align: center !important;
-    padding: 6px 4px !important;
-    font-size: 11px !important;
-  }
-
-  .btn-act {
-    flex: 1 !important;
-    padding: 8px 10px !important;
-    font-size: 13px !important;
-  }
-
-  /* 5. 右側抽屜在手機上滿版顯示 */
-  .side-panel-drawer {
-    width: 100vw !important;
-    right: -100vw !important;
-  }
+  .table-felt { border-radius: 68px !important; }
+  .seat { width: 100px !important; }
+  .card { width: 44px !important; height: 62px !important; }
+  .card.small { width: 34px !important; height: 48px !important; }
 }
 </style>
 </head>
@@ -428,7 +343,7 @@ body{
   <div class="view-panel active" id="homeView">
     <div class="top-bar-home">
       <div class="brand">
-        <span class="mark">金 龍 娛 樂 城</span>
+        <span class="mark">金 龍</span>
         <span class="sub">大廳</span>
       </div>
       <div class="global-chips-badge">
@@ -438,27 +353,21 @@ body{
     </div>
     <div class="home-container">
       <div class="home-hero">
-        <h1>歡迎來到金龍娛樂城</h1>
-        <p>選擇您想體驗的經典博弈遊戲，隨時體驗真實競技的刺激感</p>
+        <h1>金龍娛樂城</h1>
+        <p>隨時體驗真實競技德州撲克</p>
       </div>
       <div class="game-grid">
         <div class="game-card" id="enterPokerBtn">
           <div class="icon-wrap">♠</div>
           <h3>德州撲克</h3>
-          <p>6人桌輪替賽，挑戰 16 位 AI 對手，展現您的精湛牌技與心理戰術。</p>
+          <p>6人桌輪替賽，挑戰 16 位 AI 對手。</p>
           <button class="btn-play">立即進入</button>
-        </div>
-        <div class="game-card disabled">
-          <div class="icon-wrap">🎲</div>
-          <h3>21點 (敬請期待)</h3>
-          <p>超越莊家，精準計算牌值，追求完美黑傑克。</p>
-          <button class="btn-play">籌備中</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- VIEW 2: POKER FULLSCREEN VIEW -->
+  <!-- VIEW 2: POKER VIEW -->
   <div class="view-panel" id="pokerView">
     
     <div class="poker-header-overlay">
@@ -467,22 +376,18 @@ body{
       </div>
 
       <div class="table-status-bar">
-        <div class="status-item"><span class="label">桌號:</span><span class="val">#01</span></div>
-        <div class="status-divider"></div>
         <div class="status-item"><span class="label">盲注:</span><span class="val" id="blindNow">10/20</span></div>
         <div class="status-divider"></div>
         <div class="status-item"><span class="label">底池:</span><span class="val" id="headerPotAmt">0</span></div>
       </div>
 
-      <button class="side-trigger-btn" id="drawerToggleBtn">
-        <span>側邊選單</span> 📊
-      </button>
+      <button class="side-trigger-btn" id="drawerToggleBtn">📊 紀錄</button>
     </div>
 
     <div class="fullscreen-table-wrap">
       <div class="table-rail">
         <div class="table-felt" id="tableFelt">
-          <div class="table-emblem">GOLDEN DRAGON CLUB</div>
+          <div class="table-emblem">GOLDEN DRAGON</div>
 
           <div class="center-area">
             <div class="pot-badge-center"><span class="chip-ico"></span><span id="potAmt">底池 0</span></div>
@@ -494,9 +399,10 @@ body{
       </div>
     </div>
 
-    <!-- 底部半透明懸浮式操作面板 (重新排版) -->
+    <!-- 懸浮式操作面板 (手機響應重構) -->
     <div class="action-panel-floating">
       <div class="hand-strength" id="handStrength">&nbsp;</div>
+      
       <div class="action-row" id="actionRow">
         <div class="quick-bets" id="quickBets">
           <button class="chip-quick" data-q="0.5">1/2 底池</button>
@@ -504,61 +410,55 @@ body{
           <button class="chip-quick" data-q="allin">全下</button>
         </div>
         
-        <div class="action-buttons">
-          <button class="btn-act btn-fold" id="btnFold">棄牌</button>
-          <button class="btn-act btn-call" id="btnCall">跟注</button>
-        </div>
+        <div class="bottom-controls">
+          <div class="action-buttons">
+            <button class="btn-act btn-fold" id="btnFold">棄牌</button>
+            <button class="btn-act btn-call" id="btnCall">跟注</button>
+          </div>
 
-        <div class="raise-group">
-          <button class="btn-act btn-raise" id="btnRaise">加注至</button>
-          <div class="slider-wrap" id="sliderWrap">
-            <input type="range" id="betSlider" min="0" max="100" value="0">
-            <div class="slider-amt" id="sliderAmt">0</div>
+          <div class="raise-group">
+            <button class="btn-act btn-raise" id="btnRaise">加注</button>
+            <div class="slider-wrap" id="sliderWrap">
+              <input type="range" id="betSlider" min="0" max="100" value="0">
+              <div class="slider-amt" id="sliderAmt">0</div>
+            </div>
           </div>
         </div>
       </div>
+
       <div class="next-hand-cta" id="nextHandCta" style="display:none;">
         <button class="btn-next" id="btnNextHand">開始下一手 →</button>
       </div>
     </div>
 
-    <!-- 右側滑出式抽屜 Drawer (重新排版) -->
+    <!-- Drawer 面板 -->
     <div class="drawer-overlay" id="drawerOverlay"></div>
     <div class="side-panel-drawer" id="sideDrawer">
       <div class="drawer-header">
-        <div class="drawer-title">牌局詳細資訊</div>
+        <div class="drawer-title">牌局資訊</div>
         <button class="drawer-close-btn" id="drawerCloseBtn">關閉 ✖</button>
       </div>
 
       <div class="panel-box">
-        <div class="panel-title">📊 牌局概況</div>
+        <div class="panel-title">📊 概況</div>
         <div class="stat-grid">
-          <div class="stat-card"><div class="lbl">當前手數</div><div class="val" id="handNo">1</div></div>
+          <div class="stat-card"><div class="lbl">手數</div><div class="val" id="handNo">1</div></div>
           <div class="stat-card"><div class="lbl">在桌人數</div><div class="val" id="activePlayerCount">6/6</div></div>
         </div>
-        <button class="btn-nav-icon" id="resetBtn" style="width:100%; justify-content:center; margin-top:6px;">重新開局</button>
+        <button class="btn-nav-icon" id="resetBtn" style="width:100%; justify-content:center; margin-top:4px;">重新開局</button>
       </div>
 
       <div class="panel-box">
-        <div class="panel-title">📈 盲注結構</div>
+        <div class="panel-title">📈 盲注</div>
         <div class="blind-info">
-          <div class="row"><span>當前等級</span><b id="blindInfoNow">10 / 20</b></div>
+          <div class="row"><span>當前</span><b id="blindInfoNow">10 / 20</b></div>
           <div class="row"><span>升盲倒數</span><span id="blindInfoNext">還有 8 手</span></div>
         </div>
       </div>
 
-      <!-- Action 牌局紀錄 (獨立填滿與滾動) -->
       <div class="panel-box log-box">
-        <div class="panel-title">📜 Action 牌局紀錄</div>
+        <div class="panel-title">📜 Action 紀錄</div>
         <div class="log-list" id="logList"></div>
-      </div>
-
-      <div class="panel-box">
-        <div class="panel-title">💰 個人結算統計</div>
-        <div class="blind-info">
-          <div class="row"><span>初始籌碼</span><b>2000</b></div>
-          <div class="row"><span>當前籌碼</span><b id="drawerUserChips">2000</b></div>
-        </div>
       </div>
     </div>
 
@@ -779,22 +679,22 @@ function aiDecide(player, G){
 }
 
 const AI_NAMES = [
-  {name:'北漂許念念', personality:'tight_agg'},
-  {name:'養八哥的張美美', personality:'loose_agg'},
-  {name:'煮麵的曾明明', personality:'tight_pass'},
-  {name:'賭神李品品', personality:'loose_pass'},
-  {name:'撿角林宜宜', personality:'balanced'},
-  {name:'胖胖小愷愷', personality:'tight_agg'},
-  {name:'放大版美女', personality:'loose_agg'},
-  {name:'欠我3345新台幣的林妙妙', personality:'tight_pass'},
-  {name:'西螺大姐頭', personality:'balanced'},
-  {name:'漁佬許鳳鳳', personality:'loose_pass'},
-  {name:'插座爆炸王緣緣', personality:'tight_agg'},
-  {name:'工地主任廖哲哲', personality:'loose_agg'},
-  {name:'帥潮倫一倫', personality:'tight_pass'},
-  {name:'光頭張鮪鮪', personality:'balanced'},
-  {name:'不熟的王妍妍', personality:'loose_agg'},
-  {name:'阿輝阿輝伯', personality:'tight_agg'}
+  {name:'許念念', personality:'tight_agg'},
+  {name:'張美美', personality:'loose_agg'},
+  {name:'曾明明', personality:'tight_pass'},
+  {name:'李品品', personality:'loose_pass'},
+  {name:'林宜宜', personality:'balanced'},
+  {name:'小愷愷', personality:'tight_agg'},
+  {name:'美女', personality:'loose_agg'},
+  {name:'林妙妙', personality:'tight_pass'},
+  {name:'大姐頭', personality:'balanced'},
+  {name:'許鳳鳳', personality:'loose_pass'},
+  {name:'緣緣', personality:'tight_agg'},
+  {name:'廖哲哲', personality:'loose_agg'},
+  {name:'倫一倫', personality:'tight_pass'},
+  {name:'張鮪鮪', personality:'balanced'},
+  {name:'王妍妍', personality:'loose_agg'},
+  {name:'阿輝伯', personality:'tight_agg'}
 ];
 
 const BLIND_LEVELS = [
@@ -828,8 +728,6 @@ function switchView(viewName){
 function updateGlobalChipsDisplay(){
   const chips = (G && G.allPlayers && G.allPlayers[0]) ? G.allPlayers[0].chips : (loadSavedChips() ?? STARTING_CHIPS);
   document.getElementById('globalChipsVal').textContent = chips;
-  const drawerChipsEl = document.getElementById('drawerUserChips');
-  if(drawerChipsEl) drawerChipsEl.textContent = chips;
 }
 
 function initSeatElements(){
@@ -843,8 +741,12 @@ function initSeatElements(){
 }
 
 function positionSeats(){
+  const isPortrait = window.innerHeight > window.innerWidth;
   const cx = 50, cy = 50;
-  const rx = 44, ry = 40;
+  // 動態調整圓形半徑，適應手機螢幕比例
+  const rx = isPortrait ? 40 : 42;
+  const ry = isPortrait ? 42 : 38;
+
   for(let i=0; i<ACTIVE_SEATS; i++){
     const el = document.getElementById('seat' + i);
     if(!el) continue;
@@ -855,6 +757,8 @@ function positionSeats(){
     el.style.top = `${y}%`;
   }
 }
+
+window.addEventListener('resize', positionSeats);
 
 function newGameState(){
   const savedChips = loadSavedChips();
@@ -877,9 +781,7 @@ function newGameState(){
   }
 
   return {
-    allPlayers,
-    activeSeatPlayerIds,
-    queuePlayerIds,
+    allPlayers, activeSeatPlayerIds, queuePlayerIds,
     deck:[], community:[], pot:0, currentBet:0, minRaise:20, dealerIndex:0, turnIndex:-1,
     stage:'preflop', handNumber:1, blindLevelIdx:0, sb:BLIND_LEVELS[0][0], bb:BLIND_LEVELS[0][1], log:[], waitingHuman:false, handOver:false,
   };
@@ -912,7 +814,6 @@ function addLog(msg, important){
 
 function rotateSeats(){
   if(G.handNumber === 1) return;
-
   const validQueue = G.queuePlayerIds.filter(id => !G.allPlayers[id].out);
   if(validQueue.length === 0) return;
 
@@ -938,12 +839,11 @@ function rotateSeats(){
     G.queuePlayerIds.push(outgoingId);
   }
 
-  addLog(`🔄 牌桌輪替：${G.allPlayers[incomingId].name} 入座，${G.allPlayers[outgoingId].name} 離桌休息`, true);
+  addLog(`🔄 輪替：${G.allPlayers[incomingId].name} 入座`, true);
 }
 
 function startHand(){
   rotateSeats();
-
   G.deck = shuffleDeck(freshDeck());
   G.community = [];
   G.pot = 0;
@@ -980,7 +880,7 @@ function startHand(){
     G.dealerIndex = (G.dealerIndex+1) % ACTIVE_SEATS;
   } while(activePlayers[G.dealerIndex].out);
 
-  addLog(`— 第 ${G.handNumber} 手開始 (盲注 ${G.sb}/${G.bb}) —`, true);
+  addLog(`— 第 ${G.handNumber} 手 (盲注 ${G.sb}/${G.bb}) —`, true);
 
   const order = activeSeatOrderFrom(G.dealerIndex);
   for(let round=0; round<2; round++){
@@ -992,9 +892,9 @@ function startHand(){
   const sbSeat = nextActiveSeat(G.dealerIndex);
   const bbSeat = nextActiveSeat(sbSeat);
   postBet(activePlayers[sbSeat], G.sb);
-  addLog(`${activePlayers[sbSeat].name} 下小盲 ${G.sb}`);
+  addLog(`${activePlayers[sbSeat].name} 小盲 ${G.sb}`);
   postBet(activePlayers[bbSeat], G.bb);
-  addLog(`${activePlayers[bbSeat].name} 下大盲 ${G.bb}`);
+  addLog(`${activePlayers[bbSeat].name} 大盲 ${G.bb}`);
   G.currentBet = G.bb;
 
   let firstToAct = nextActiveSeat(bbSeat);
@@ -1036,12 +936,8 @@ function nextActiveSeat(fromIdx){
   return i;
 }
 
-function playersInHand(){
-  return getActivePlayers().filter(p=>!p.folded && !p.out);
-}
-function playersWhoCanAct(){
-  return getActivePlayers().filter(p=>!p.folded && !p.out && !p.allIn);
-}
+function playersInHand(){ return getActivePlayers().filter(p=>!p.folded && !p.out); }
+function playersWhoCanAct(){ return getActivePlayers().filter(p=>!p.folded && !p.out && !p.allIn); }
 
 function bettingRoundComplete(){
   const canAct = playersWhoCanAct();
@@ -1081,7 +977,7 @@ function proceedTurn(){
   } else {
     G.waitingHuman = false;
     disableActions();
-    setTimeout(()=>{ aiTakeTurn(p); }, 300 + Math.random()*200);
+    setTimeout(()=>{ aiTakeTurn(p); }, 250 + Math.random()*200);
   }
 }
 
@@ -1106,8 +1002,7 @@ function aiTakeTurn(p){
 
 function applyAction(p, action, amount){
   if(action==='fold'){
-    p.folded = true;
-    p.hasActed = true;
+    p.folded = true; p.hasActed = true;
     addLog(`${p.name} 棄牌`);
   } else if(action==='check'){
     p.hasActed = true;
@@ -1116,14 +1011,12 @@ function applyAction(p, action, amount){
     const toCall = Math.min(G.currentBet - p.roundBet, p.chips);
     postBet(p, toCall);
     p.hasActed = true;
-    addLog(p.allIn ? `${p.name} 全下跟注 ${p.roundBet}` : `${p.name} 跟注 ${G.currentBet}`);
+    addLog(p.allIn ? `${p.name} 全下跟 ${p.roundBet}` : `${p.name} 跟注 ${G.currentBet}`);
   } else if(action==='bet'){
     const amt = Math.max(G.bb, Math.min(amount, p.chips));
     postBet(p, amt);
-    G.currentBet = p.roundBet;
-    G.minRaise = amt;
-    resetActedExcept(p);
-    p.hasActed = true;
+    G.currentBet = p.roundBet; G.minRaise = amt;
+    resetActedExcept(p); p.hasActed = true;
     addLog(p.allIn ? `${p.name} 全下 ${p.roundBet}` : `${p.name} 下注 ${amt}`, true);
   } else if(action==='raise'){
     const targetTotal = Math.max(G.currentBet + G.minRaise, amount);
@@ -1132,9 +1025,8 @@ function applyAction(p, action, amount){
     postBet(p, need);
     G.minRaise = Math.max(G.minRaise, p.roundBet - prevBet);
     G.currentBet = p.roundBet;
-    resetActedExcept(p);
-    p.hasActed = true;
-    addLog(p.allIn ? `${p.name} 全下加注到 ${p.roundBet}` : `${p.name} 加注到 ${p.roundBet}`, true);
+    resetActedExcept(p); p.hasActed = true;
+    addLog(p.allIn ? `${p.name} 全下至 ${p.roundBet}` : `${p.name} 加注至 ${p.roundBet}`, true);
   }
   renderAll();
   proceedTurn();
@@ -1157,34 +1049,25 @@ function moveToNextStage(){
   }
 
   if(G.stage==='preflop'){
-    G.deck.pop();
-    G.community.push(G.deck.pop(), G.deck.pop(), G.deck.pop());
-    G.stage='flop';
-    addLog('— 翻牌 —', true);
+    G.deck.pop(); G.community.push(G.deck.pop(), G.deck.pop(), G.deck.pop());
+    G.stage='flop'; addLog('— 翻牌 —', true);
   } else if(G.stage==='flop'){
-    G.deck.pop();
-    G.community.push(G.deck.pop());
-    G.stage='turn';
-    addLog('— 轉牌 —', true);
+    G.deck.pop(); G.community.push(G.deck.pop());
+    G.stage='turn'; addLog('— 轉牌 —', true);
   } else if(G.stage==='turn'){
-    G.deck.pop();
-    G.community.push(G.deck.pop());
-    G.stage='river';
-    addLog('— 河牌 —', true);
+    G.deck.pop(); G.community.push(G.deck.pop());
+    G.stage='river'; addLog('— 河牌 —', true);
   } else if(G.stage==='river'){
-    G.stage='showdown';
-    showdown();
-    return;
+    G.stage='showdown'; showdown(); return;
   }
 
-  G.currentBet = 0;
-  G.minRaise = G.bb;
+  G.currentBet = 0; G.minRaise = G.bb;
   getActivePlayers().forEach(p=>{ p.roundBet=0; });
 
   renderAll();
 
   if(canAct.length<=1){
-    setTimeout(moveToNextStage, 800);
+    setTimeout(moveToNextStage, 600);
     return;
   }
 
@@ -1198,7 +1081,7 @@ function moveToNextStage(){
     if(!p.out && !p.folded && !p.allIn){ firstActor = i; break; }
   }
   if(firstActor===-1){
-    setTimeout(moveToNextStage, 800);
+    setTimeout(moveToNextStage, 600);
     return;
   }
   G.turnIndex = (firstActor - 1 + ACTIVE_SEATS) % ACTIVE_SEATS;
@@ -1208,7 +1091,7 @@ function moveToNextStage(){
 function finishHandByFold(winner){
   G.handOver = true;
   winner.chips += G.pot;
-  addLog(`${winner.name} 獲勝，贏得 ${G.pot} 籌碼（其餘玩家棄牌）`, true);
+  addLog(`${winner.name} 贏得 ${G.pot} 籌碼`, true);
   G.pot = 0;
   renderAll();
   showNextHandCta();
@@ -1229,8 +1112,7 @@ function computePots(){
     const eligible=[];
     for(const c of contribs){
       if(c.amt>0){
-        potAmt += min;
-        c.amt -= min;
+        potAmt += min; c.amt -= min;
         if(!c.folded) eligible.push(c.p);
       }
     }
@@ -1242,8 +1124,8 @@ function computePots(){
 function showdown(){
   const inHand = playersInHand();
   const results = inHand.map(p=>({p, hand: evaluateBest([...p.hand, ...G.community])}));
-
   const sortedResults = [...results].sort((a,b) => cmpHand(b.hand, a.hand));
+
   let currentRank = 1;
   sortedResults.forEach((res, index) => {
     if(index > 0 && cmpHand(res.hand, sortedResults[index-1].hand) < 0){
@@ -1267,16 +1149,11 @@ function showdown(){
     winners.forEach((w,i)=>{
       w.chips += share + (i<remainder?1:0);
     });
-    winnerLines.push(`${winners.map(w=>w.name).join('、')} 贏得 ${pot.amount} 籌碼（${best.name}）`);
+    winnerLines.push(`${winners.map(w=>w.name).join('、')} 贏得 ${pot.amount}（${best.name}）`);
   });
 
-  G.pot = 0;
-  G.handOver = true;
-
-  results.forEach(r=>{
-    r.p._showHand = true;
-    r.p._handName = r.hand.name;
-  });
+  G.pot = 0; G.handOver = true;
+  results.forEach(r=>{ r.p._showHand = true; r.p._handName = r.hand.name; });
 
   renderAll();
   winnerLines.forEach(l=> addLog(l, true));
@@ -1293,8 +1170,8 @@ function showHandSummaryModal(){
   const colorStr = diff > 0 ? '#4caf50' : (diff < 0 ? '#e2453b' : '#c9bd9f');
   
   const textHtml = `
-    <div style="font-size:26px; font-weight:800; color:${colorStr}; margin-bottom:8px;">${diffText}</div>
-    <div style="font-size:16px; color:var(--cream-dim);">餘額：<b>${human.chips}</b></div>
+    <div style="font-size:24px; font-weight:800; color:${colorStr}; margin-bottom:6px;">${diffText}</div>
+    <div style="font-size:14px; color:var(--cream-dim);">餘額：<b>${human.chips}</b></div>
   `;
   
   setTimeout(()=>{
@@ -1312,19 +1189,18 @@ function showNextHandCta(){
 function checkBustouts(){
   G.allPlayers.forEach(p=>{
     if(!p.out && p.chips<=0){
-      p.out = true;
-      p.chips = 0;
-      addLog(`${p.name} 籌碼歸零，淘汰出局！`, true);
+      p.out = true; p.chips = 0;
+      addLog(`${p.name} 淘汰出局！`, true);
     }
   });
   const human = G.allPlayers[0];
   if(human.out){
-    setTimeout(()=> showModal('破產了', '你的籌碼已經歸零。要重新開始一局新牌局嗎？', resetGame), 600);
+    setTimeout(()=> showModal('破產了', '籌碼已歸零，要重新開始新牌局嗎？', resetGame), 600);
     return;
   }
   const remaining = G.allPlayers.filter(p=>!p.out);
   if(remaining.length===1 && remaining[0].isHuman){
-    setTimeout(()=> showModal('恭喜獲勝！', '你擊敗了所有16位對手，成為金龍賭桌的最終贏家！', resetGame), 600);
+    setTimeout(()=> showModal('恭喜獲勝！', '你擊敗了所有對手，成為最終贏家！', resetGame), 600);
   }
 }
 
@@ -1403,7 +1279,7 @@ function renderHeader(){
   document.getElementById('blindInfoNow').textContent = `${G.sb} / ${G.bb}`;
   const handsLeft = HANDS_PER_LEVEL - ((G.handNumber-1) % HANDS_PER_LEVEL);
   const isMax = G.blindLevelIdx >= BLIND_LEVELS.length-1;
-  document.getElementById('blindInfoNext').textContent = isMax ? '已達最高盲注' : `還有 ${handsLeft} 手`;
+  document.getElementById('blindInfoNext').textContent = isMax ? '最高盲注' : `${handsLeft} 手`;
 
   const activeInGame = G.allPlayers.filter(p=>!p.out).length;
   document.getElementById('activePlayerCount').textContent = `${activeInGame}/${TOTAL_PLAYERS}`;
@@ -1456,17 +1332,11 @@ function renderSeat(seatIdx){
     : '';
 
   let statusHtml = '';
-  if(p.out){
-    statusHtml = '<span class="status-tag">出局</span>';
-  } else if(p.folded){
-    statusHtml = '<span class="status-tag fold">已棄牌</span>';
-  } else if(p.allIn){
-    statusHtml = '<span class="status-tag allin">全下</span>';
-  } else if(isTurn){
-    statusHtml = '<span class="status-tag">思考中…</span>';
-  } else {
-    statusHtml = '<span class="status-tag">&nbsp;</span>';
-  }
+  if(p.out){ statusHtml = '<span class="status-tag">出局</span>'; }
+  else if(p.folded){ statusHtml = '<span class="status-tag fold">棄牌</span>'; }
+  else if(p.allIn){ statusHtml = '<span class="status-tag allin">全下</span>'; }
+  else if(isTurn){ statusHtml = '<span class="status-tag">思考中…</span>'; }
+  else { statusHtml = '<span class="status-tag">&nbsp;</span>'; }
 
   const showHandName = (p._showHand && p._handName) ? `<div class="showdown-hand">${p._handName}</div>` : '';
 
@@ -1495,13 +1365,13 @@ function currentHandStrengthLabel(){
   if(p.folded || p.hand.length<2) return '';
   if(G.community.length===0){
     const s = preflopScore(p.hand);
-    if(s>0.75) return '你的起手牌：非常強勁';
-    if(s>0.55) return '你的起手牌：高於平均';
-    if(s>0.35) return '你的起手牌：普通';
-    return '你的起手牌：較弱';
+    if(s>0.75) return '手牌：強勁';
+    if(s>0.55) return '手牌：良好';
+    if(s>0.35) return '手牌：普通';
+    return '手牌：較弱';
   }
   const best = evaluateBest([...p.hand, ...G.community]);
-  return `你目前的牌型：${best.name}`;
+  return `目前牌型：${best.name}`;
 }
 
 function renderActionBar(){
@@ -1521,7 +1391,7 @@ function renderActionBar(){
 
   const toCall = G.currentBet - p.roundBet;
   btnCall.textContent = toCall<=0 ? '過牌' : `跟注 ${Math.min(toCall,p.chips)}`;
-  btnRaise.textContent = G.currentBet===0 ? '下注' : '加注至';
+  btnRaise.textContent = G.currentBet===0 ? '下注' : '加注';
 
   if(myTurn){
     const minTotal = G.currentBet===0 ? G.bb : (G.currentBet + G.minRaise);
@@ -1611,7 +1481,7 @@ document.querySelectorAll('.chip-quick').forEach(btn=>{
 });
 document.getElementById('btnNextHand').addEventListener('click', nextHand);
 document.getElementById('resetBtn').addEventListener('click', ()=>{
-  showModal('重新開局', '確定要放棄目前籌碼，重新開始一局嗎？', resetGame);
+  showModal('重新開局', '確定要重新開始一局嗎？', resetGame);
 });
 
 initSeatElements();
